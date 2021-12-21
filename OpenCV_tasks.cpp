@@ -50,7 +50,8 @@ int main(int argc, char** argv) {
 			<< mean_absolute_difference(startImage, noisedImage) << std::endl;
 
     showChangedImage(startImage, noisedImage, gaussian_method, "Gauss");
-
+    showChangedImage(startImage, noisedImage, bilateral_method, "Bilateral");
+    showChangedImage(startImage, noisedImage, nl_means_method, "NL means");
 
 	waitKey(0);
 	destroyAllWindows();
