@@ -16,7 +16,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	Mat startImage = imread("space2.jpg");
+	Mat startImage = imread("slon3.jpg");
 	if (startImage.empty()) {
 		cout << "Could not open or find the image" << endl;
 		return -1;
@@ -31,51 +31,28 @@ int main(int argc, char** argv) {
 	imshow(windowName, startImage);
 
 	Mat binary_image;
-	binarize(startImage, binary_image);
-	windowName = "binary_4_lab";
+	binarize(startImage, binary_image, 128);
+	windowName = "binary_128";
+	imwrite(windowName + "_MyImage.jpg", binary_image);
+	namedWindow(windowName);
+	imshow(windowName, binary_image);
+
+	int mean = find_mean_value(startImage);
+	std::cout << "mean: " << mean << std::endl;
+	binarize(startImage, binary_image, mean);
+	windowName = "binary_mean";
 	imwrite(windowName + "_MyImage.jpg", binary_image);
 	namedWindow(windowName);
 	imshow(windowName, binary_image);
 
 
-	vector<uchar> row1{240, 240, 240};
-	vector<uchar> row2{240, 240, 240};
-	vector<uchar> row3{240, 240, 240};
-	vector<vector<uchar>> mask{row1, row2, row3};
-
- 	Mat dilatated;
-	dilatation(binary_image, dilatated, mask, make_pair(1,1));
-
-	windowName = "dilatated_4_lab";
-	imwrite(windowName + "_MyImage.jpg", dilatated);
+	int otsu = find_treshold_otsu(startImage);
+	std::cout << "otsu: " << otsu << std::endl;
+	binarize(startImage, binary_image, otsu);
+	windowName = "binary_otsu";
+	imwrite(windowName + "_MyImage.jpg", binary_image);
 	namedWindow(windowName);
-	imshow(windowName, dilatated);
-
-
- 	Mat erozed;
-	erosion(binary_image, erozed, mask, make_pair(1,1));
-
-	windowName = "erozed_4_lab";
-	imwrite(windowName + "_MyImage.jpg", erozed);
-	namedWindow(windowName);
-	imshow(windowName, erozed);
-
- 	Mat open;
- 	open_operation(binary_image, open, mask, make_pair(1,1));
-
-	windowName = "open_4_lab";
-	imwrite(windowName + "_MyImage.jpg", open);
-	namedWindow(windowName);
-	imshow(windowName, open);
-
- 	Mat close;
- 	close_operation(binary_image, close, mask, make_pair(1,1));
-
-	windowName = "close_4_lab";
-	imwrite(windowName + "_MyImage.jpg", close);
-	namedWindow(windowName);
-	imshow(windowName, close);
-
+	imshow(windowName, binary_image);
 
 	waitKey(0);
 	destroyAllWindows();

@@ -10,12 +10,9 @@
 
 using namespace cv;
 
-void binarize(const Mat& src, Mat& dist);
+void binarize(const Mat& src, Mat& dist, int);
 
-void dilatation(const Mat& src, Mat& dist, std::vector<std::vector<uchar>>& mask, std::pair<int, int> center_position);
-void erosion(const Mat& src, Mat& dist, std::vector<std::vector<uchar>>& mask, std::pair<int, int> center);
-
-void open_operation(const Mat& src, Mat& dist, std::vector<std::vector<uchar>>& mask, std::pair<int, int> center);
-void close_operation(const Mat& src, Mat& dist, std::vector<std::vector<uchar>>& mask, std::pair<int, int> center);
+int find_mean_value(const Mat& src);
+int find_treshold_otsu(const Mat& src);
 
 #endif /* MORPHOLOGY_H_ */
